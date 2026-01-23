@@ -18,4 +18,5 @@ You Guessed It Right. Number: 78 ,Tries: 3
 **3. [Snake Game Pygame Project](snakeGamePygame.py)**
 
 Preview:
+
 <img width="806" height="640" alt="Screenshot from 2026-01-23 21-36-05" src="https://github.com/user-attachments/assets/f72938d5-e5a4-4e06-83d0-8a3d3c8a4b17" />
