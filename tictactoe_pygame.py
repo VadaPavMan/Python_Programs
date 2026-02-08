@@ -54,21 +54,21 @@ while running:
             print(f"Clicked at: {mouse_pos}")
             
             # Top
-            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 0 and mouse_pos[1] <= 320):
                 print(f'Clicked On Top Left')
                 if arr[0][0] == 1:
                     print(f'Positon Already Taken')
                     pass
                 else:
                     arr[0][0] = 1
-            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (mouse_pos[1] > 0 and mouse_pos[1] <= 320):
                 print(f'Clicked On Top Mid')
                 if arr[0][1] == 1:
                     print(f'Positon Already Taken')
                     pass
                 else:
                     arr[0][1] = 1
-            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (mouse_pos[1] > 0 and mouse_pos[1] <= 320):
                 print(f'Clicked On Top Right')
                 if arr[0][2] == 1:
                     print(f'Positon Already Taken')
@@ -77,13 +77,51 @@ while running:
                     arr[0][2] = 1
             
             # Mid
-            elif (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 320 and mouse_pos[1] < 680):
+            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 320 and mouse_pos[1] <= 680):
                 print(f'Clicked On Mid Left')
                 if arr[1][0] == 1:
                     print(f'Positon Already Taken')
                     pass
                 else:
                     arr[1][0] = 1
+            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (mouse_pos[1] > 320 and mouse_pos[1] <= 680):
+                print(f'Clicked On Mid Mid')
+                if arr[1][1] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[1][1] = 1
+            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (mouse_pos[1] > 320 and mouse_pos[1] <= 680):
+                print(f'Clicked On Mid Right')
+                if arr[1][2] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[1][2] = 1
+            
+            # Down
+            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 680 and mouse_pos[1] <= 1000):
+                print(f'Clicked On Down Left')
+                if arr[2][0] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[2][0] = 1
+            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (mouse_pos[1] > 680 and mouse_pos[1] <= 1000):
+                print(f'Clicked On Down Mid')
+                if arr[2][1] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[2][1] = 1
+            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (mouse_pos[1] > 680 and mouse_pos[1] <= 1000):
+                print(f'Clicked On Down Right')
+                if arr[2][2] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[2][2] = 1
+                    
     # Draw Screen With Color
     screen.fill(pygame.Color("black"))
 
