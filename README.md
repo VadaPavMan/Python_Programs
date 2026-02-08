@@ -26,4 +26,4 @@ Preview:
 
 Preview:
 
-<img width="907" height="1045" alt="Screenshot from 2026-02-08 20-34-34" src="https://github.com/user-attachments/assets/e735f946-c754-452a-bc8a-877bddf7bbf6" />
+<img width="760" height="900" alt="Screenshot from 2026-02-08 20-34-34" src="https://github.com/user-attachments/assets/e735f946-c754-452a-bc8a-877bddf7bbf6" />
