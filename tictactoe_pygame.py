@@ -8,6 +8,19 @@ WIDTH, HEIGHT = 900, 1000
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tic Tac Toe")
 
+# Define Position:
+# TOP_LEFT = x(0, 270) y(0, 320)
+# TOP_MID = x(271, 630) y(0, 320)
+# TOP_RIGHT = x(631, 900) y(0, 320)
+
+# MID_LEFT = x(0, 270) y(320, 680)
+# MID_MID = x(271, 630) y(320, 680)
+# MID_RIGHT = x(631, 900) y(320, 680)
+
+# DOWN_LEFT = x(0, 270) y(680, 1000)
+# DOWN_MID = x(271, 630) y(680, 1000)
+# DOWN_RIGHT = x(631, 900) y(680, 1000)
+
 running = True
 while running:
 
