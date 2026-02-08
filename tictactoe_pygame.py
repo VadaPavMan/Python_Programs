@@ -5,8 +5,9 @@ import sys
 pygame.init()
 WIDTH, HEIGHT = 900, 1000
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tic Tac Toe")
+arr = [[0, 0, 0]
+      ,[0, 0, 0], 
+       [0, 0, 0]]
 
 # Define Position:
 # TOP_LEFT = x(0, 270) y(0, 320)
@@ -20,6 +21,9 @@ pygame.display.set_caption("Tic Tac Toe")
 # DOWN_LEFT = x(0, 270) y(680, 1000)
 # DOWN_MID = x(271, 630) y(680, 1000)
 # DOWN_RIGHT = x(631, 900) y(680, 1000)
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Tic Tac Toe")
 
 running = True
 while running:
@@ -48,13 +52,46 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
             print(f"Clicked at: {mouse_pos}")
-
+            
+            # Top
+            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+                print(f'Clicked On Top Left')
+                if arr[0][0] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[0][0] = 1
+            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+                print(f'Clicked On Top Mid')
+                if arr[0][1] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[0][1] = 1
+            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (mouse_pos[1] > 0 and mouse_pos[1] < 320):
+                print(f'Clicked On Top Right')
+                if arr[0][2] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[0][2] = 1
+            
+            # Mid
+            elif (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (mouse_pos[1] > 320 and mouse_pos[1] < 680):
+                print(f'Clicked On Mid Left')
+                if arr[1][0] == 1:
+                    print(f'Positon Already Taken')
+                    pass
+                else:
+                    arr[1][0] = 1
     # Draw Screen With Color
     screen.fill(pygame.Color("black"))
 
     # Draw Linings Horizontal Vertical
     add_space = -180
     for i in range(2):
+        
+        # Horizontal
         pygame.draw.line(
             screen,
             pygame.Color("white"),
@@ -62,7 +99,8 @@ while running:
             (WIDTH, (HEIGHT // 2) + add_space),
             5,
         )
-
+        
+        # Vertical
         pygame.draw.line(
             screen,
             pygame.Color("white"),
