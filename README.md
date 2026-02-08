@@ -25,3 +25,5 @@ Preview:
 **4. [Tic Tac Toe Using Pygame](tictactoe_pygame.py)**
 
 Preview:
+
+<img width="907" height="1045" alt="Screenshot from 2026-02-08 20-34-34" src="https://github.com/user-attachments/assets/e735f946-c754-452a-bc8a-877bddf7bbf6" />
