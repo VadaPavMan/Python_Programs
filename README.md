@@ -21,4 +21,7 @@ Preview:
 
 <img width="806" height="640" alt="Screenshot from 2026-01-23 21-36-05" src="https://github.com/user-attachments/assets/f72938d5-e5a4-4e06-83d0-8a3d3c8a4b17" />
 
+
 **4. [Tic Tac Toe Using Pygame](tictactoe_pygame.py)**
+
+Preview:
