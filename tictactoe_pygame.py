@@ -1,11 +1,14 @@
 import pygame
 import sys
 
-
 pygame.init()
 WIDTH, HEIGHT = 900, 1000
-current_player = "X" 
+current_player = "X"
 arr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+winner = ""
+game_over = False
+x_score = 0
+o_score = 0
 
 # Define Position:
 # TOP_LEFT = x(0, 270) y(0, 320)
@@ -23,6 +26,43 @@ arr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tic Tac Toe")
 
+
+def checkWin(arr):
+    # Check rows
+    for row in range(3):
+        if arr[row][0] != 0 and arr[row][0] == arr[row][1] == arr[row][2]:
+            return arr[row][0]
+    
+    # Check columns
+    for col in range(3):
+        if arr[0][col] != 0 and arr[0][col] == arr[1][col] == arr[2][col]:
+            return arr[0][col]
+    
+    # Check diagonals
+    if arr[0][0] != 0 and arr[0][0] == arr[1][1] == arr[2][2]:
+        return arr[0][0]
+    if arr[0][2] != 0 and arr[0][2] == arr[1][1] == arr[2][0]:
+        return arr[0][2]
+    
+    return None
+
+
+def checkDraw(arr):
+    for row in range(3):
+        for col in range(3):
+            if arr[row][col] == 0:
+                return False
+    return True
+
+
+def resetGame():
+    global arr, current_player, winner, game_over
+    arr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    current_player = "X"
+    winner = ""
+    game_over = False
+
+
 running = True
 while running:
 
@@ -30,9 +70,7 @@ while running:
     screen.fill(pygame.Color("black"))
 
     # Score System
-    x = 0
-    o = 0
-    score = f"X: {x} | O: {o}"
+    score = f"X: {x_score} | O: {o_score}"
     X_text = "X"
     O_text = "O"
     X_font = pygame.font.SysFont("sansserif", 130)
@@ -49,112 +87,84 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
+            elif event.key == pygame.K_r:
+                resetGame()
+                
         elif event.type == pygame.VIDEORESIZE:
             WIDTH = event.w
             HEIGHT = event.h
-
             screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+            
+        elif event.type == pygame.MOUSEBUTTONDOWN and not game_over:
             mouse_pos = event.pos
             print(f"Clicked at: {mouse_pos}")
+            
+            row, col = -1, -1
 
-            # Top
-            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (
-                mouse_pos[1] > 0 and mouse_pos[1] <= 320
-            ):
-                print(f"Clicked On Top Left")
-                if arr[0][0] == 0:
-                    arr[0][0] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
+            # Top row
+            if mouse_pos[1] > 0 and mouse_pos[1] <= 320:
+                row = 0
+                if mouse_pos[0] > 0 and mouse_pos[0] <= 270:
+                    col = 0
+                    print("Clicked On Top Left")
+                elif mouse_pos[0] > 271 and mouse_pos[0] <= 630:
+                    col = 1
+                    print("Clicked On Top Mid")
+                elif mouse_pos[0] > 631 and mouse_pos[0] <= 900:
+                    col = 2
+                    print("Clicked On Top Right")
+            
+            # Middle row
+            elif mouse_pos[1] > 320 and mouse_pos[1] <= 680:
+                row = 1
+                if mouse_pos[0] > 0 and mouse_pos[0] <= 270:
+                    col = 0
+                    print("Clicked On Mid Left")
+                elif mouse_pos[0] > 271 and mouse_pos[0] <= 630:
+                    col = 1
+                    print("Clicked On Mid Mid")
+                elif mouse_pos[0] > 631 and mouse_pos[0] <= 900:
+                    col = 2
+                    print("Clicked On Mid Right")
+            
+            # Bottom row
+            elif mouse_pos[1] > 680 and mouse_pos[1] <= 1000:
+                row = 2
+                if mouse_pos[0] > 0 and mouse_pos[0] <= 270:
+                    col = 0
+                    print("Clicked On Down Left")
+                elif mouse_pos[0] > 271 and mouse_pos[0] <= 630:
+                    col = 1
+                    print("Clicked On Down Mid")
+                elif mouse_pos[0] > 631 and mouse_pos[0] <= 900:
+                    col = 2
+                    print("Clicked On Down Right")
+            
+            if row != -1 and col != -1:
+                if arr[row][col] == 0:
+                    arr[row][col] = current_player
                     
-            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (
-                mouse_pos[1] > 0 and mouse_pos[1] <= 320
-            ):
-                print(f"Clicked On Top Mid")
-                if arr[0][1] == 0:
-                    arr[0][1] = current_player
-                    current_player = "O" if current_player == "X" else "X"
+                    winner = checkWin(arr)
+                    if winner:
+                        game_over = True
+                        if winner == "X":
+                            x_score += 1
+                            print(f"X Wins! Score: X-{x_score} O-{o_score}")
+                        else:
+                            o_score += 1
+                            print(f"O Wins! Score: X-{x_score} O-{o_score}")
+                    elif checkDraw(arr):
+                        game_over = True
+                        winner = "Draw"
+                        print("It's a Draw!")
+                    else:
+                        current_player = "O" if current_player == "X" else "X"
                 else:
-                    print(f"Position Already Taken")
-                    
-            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (
-                mouse_pos[1] > 0 and mouse_pos[1] <= 320
-            ):
-                print(f"Clicked On Top Right")
-                if arr[0][2] == 0:
-                    arr[0][2] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-
-            # Mid
-            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (
-                mouse_pos[1] > 320 and mouse_pos[1] <= 680
-            ):
-                print(f"Clicked On Mid Left")
-                if arr[1][0] == 0:
-                    arr[1][0] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-                    
-            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (
-                mouse_pos[1] > 320 and mouse_pos[1] <= 680
-            ):
-                print(f"Clicked On Mid Mid")
-                if arr[1][1] == 0:
-                    arr[1][1] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-                    
-            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (
-                mouse_pos[1] > 320 and mouse_pos[1] <= 680
-            ):
-                print(f"Clicked On Mid Right")
-                if arr[1][2] == 0:
-                    arr[1][2] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-
-            # Down
-            if (mouse_pos[0] > 0 and mouse_pos[0] <= 270) and (
-                mouse_pos[1] > 680 and mouse_pos[1] <= 1000
-            ):
-                print(f"Clicked On Down Left")
-                if arr[2][0] == 0:
-                    arr[2][0] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-                    
-            elif (mouse_pos[0] > 271 and mouse_pos[0] <= 630) and (
-                mouse_pos[1] > 680 and mouse_pos[1] <= 1000
-            ):
-                print(f"Clicked On Down Mid")
-                if arr[2][1] == 0:
-                    arr[2][1] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
-                    
-            elif (mouse_pos[0] > 631 and mouse_pos[0] <= 900) and (
-                mouse_pos[1] > 680 and mouse_pos[1] <= 1000
-            ):
-                print(f"Clicked On Down Right")
-                if arr[2][2] == 0:
-                    arr[2][2] = current_player
-                    current_player = "O" if current_player == "X" else "X"
-                else:
-                    print(f"Position Already Taken")
+                    print("Position Already Taken")
 
     # Draw Linings Horizontal Vertical
     add_space = -180
     for i in range(2):
-
         # Horizontal
         pygame.draw.line(
             screen,
@@ -174,12 +184,13 @@ while running:
         )
         add_space = 180
 
+    # Draw X's and O's
     cell_centers = [
-        [(135, 160), (450, 160), (765, 160)],      
-        [(135, 500), (450, 500), (765, 500)],      
-        [(135, 840), (450, 840), (765, 840)]       
+        [(135, 160), (450, 160), (765, 160)],
+        [(135, 500), (450, 500), (765, 500)],
+        [(135, 840), (450, 840), (765, 840)],
     ]
-    
+
     for row in range(3):
         for col in range(3):
             if arr[row][col] == "X":
@@ -202,6 +213,31 @@ while running:
         border_radius=22,
     )
     screen.blit(text_surface, text_rect)
+
+    # Display winner or draw message
+    if game_over:
+        overlay = pygame.Surface((WIDTH, HEIGHT))
+        overlay.set_alpha(200)
+        overlay.fill((0, 0, 0))
+        screen.blit(overlay, (0, 0))
+        
+        win_font = pygame.font.SysFont("sansserif", 80)
+        instruction_font = pygame.font.SysFont("sansserif", 40)
+        
+        if winner == "Draw":
+            win_text = win_font.render("It's a Draw!", True, pygame.Color("yellow"))
+        else:
+            win_color = pygame.Color("red") if winner == "X" else pygame.Color("blue")
+            win_text = win_font.render(f"{winner} Wins!", True, win_color)
+        
+        win_rect = win_text.get_rect()
+        win_rect.center = (WIDTH // 2, HEIGHT // 2 - 50)
+        screen.blit(win_text, win_rect)
+        
+        instruction_text = instruction_font.render("Press R to play again", True, pygame.Color("white"))
+        instruction_rect = instruction_text.get_rect()
+        instruction_rect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+        screen.blit(instruction_text, instruction_rect)
 
     pygame.display.flip()
     pygame.time.Clock().tick(60)
